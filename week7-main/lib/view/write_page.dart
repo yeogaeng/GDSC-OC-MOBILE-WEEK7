@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:week7/common/const/text.dart';
+import 'package:week7/component/keyword_select_box.dart';
 import 'package:week7/component/rounded_button.dart';
 
 class WritePage extends StatefulWidget {
@@ -24,6 +25,8 @@ class _WritePageState extends State<WritePage> {
     "여유로운",
     "귀찮이즘",
   ];
+
+  List<bool> isSelected = List.generate(12, (index) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -91,32 +94,30 @@ class _WritePageState extends State<WritePage> {
           const SizedBox(height: 24),
           // TODO GridView.builder를 활용해 보세요.
           GridView.builder(
-              primary: false,
-              shrinkWrap: true,
-              itemCount: keywords.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 103 / 64,
-                mainAxisSpacing: 9,
-                crossAxisSpacing: 8,
-              ),
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                    child: Text(
-                      '${keywords[index]}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: W900,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                );
-              })
+            primary: false,
+            shrinkWrap: true,
+            itemCount: keywords.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 103 / 64,
+              mainAxisSpacing: 9,
+              crossAxisSpacing: 8,
+            ),
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isSelected[index] = !isSelected[index];
+                  });
+                },
+                child: KeywordSelectBox(
+                  isSelected: isSelected,
+                  keywords: keywords,
+                  index: index,
+                ),
+              );
+            },
+          ),
         ],
       ),
       floatingActionButton: Container(
