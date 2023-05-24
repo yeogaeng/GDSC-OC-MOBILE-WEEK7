@@ -18,6 +18,15 @@ class HomePage extends StatelessWidget {
     "yjh.jpg",
   ];
 
+  final List<String> keywords = [
+    "우유부단",
+    "밈중독자",
+    "담담함",
+    "조용한 또라이",
+    "장난꾸러기",
+    "잔잔한 타입",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,31 +65,14 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 14,
             ),
-            const Wrap(
+            Wrap(
               spacing: 4.0,
               runSpacing: 6.0,
-              children: [
-                // TODO KeywordBox를 이용해서 다른 키워드들도 작성해 보세요.
-                // TODO Wrap Widget에 대해 공부해 보세요.
-                KeywordBox(
-                  keyword: "우유부단",
-                ),
-                KeywordBox(
-                  keyword: "밈중독자",
-                ),
-                KeywordBox(
-                  keyword: "담담함",
-                ),
-                KeywordBox(
-                  keyword: "조용한 또라이",
-                ),
-                KeywordBox(
-                  keyword: "장난꾸러기",
-                ),
-                KeywordBox(
-                  keyword: "잔잔한 타입",
-                ),
-              ],
+              children: keywords
+                  .map(
+                    (keyword) => KeywordBox(keyword: keyword),
+                  )
+                  .toList(),
             ),
             const SizedBox(
               height: 56,
@@ -111,23 +103,25 @@ class HomePage extends StatelessWidget {
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ImagePage(
-                            imageUrl: images[index],
-                          ),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ImagePage(
+                          imageUrl: images[index],
+                        ),
+                      ),
+                    );
                   },
                   child: ClipRRect(
                     //사진 둥글게
                     borderRadius: BorderRadius.circular(10),
                     child: AspectRatio(
-                        //image 가로세로 비율 맞춰줌
-                        aspectRatio: 1,
-                        child: Image.asset(
-                          "assets/images/${images[index]}",
-                          fit: BoxFit.cover,
-                        )),
+                      //image 가로세로 비율 맞춰줌
+                      aspectRatio: 1,
+                      child: Image.asset(
+                        "assets/images/${images[index]}",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 );
               },
